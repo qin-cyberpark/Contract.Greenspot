@@ -1,0 +1,114 @@
+﻿@{
+    var _model = (ContractOnline.Models.FormViewModel)ViewBag.Model;
+}
+<html>
+<head>
+    <title></title>
+    <link rel="icon" type="image/png" href="~/img/icon.png">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-size: 28px;
+        }
+
+        .nav-tabs > li > a {
+            /* adjust padding for height*/
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #5cb85c;
+        }
+
+        .titleHr {
+            height: 3px;
+            background: #3d8b3d;
+            margin-bottom: 0px;
+        }
+
+        .cellDevice {
+            width: 300px;
+        }
+
+        .cellPrice {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container col-xs-12">
+        <div style="height:80px;background-color:#5cb85c;text-align:center;padding-top:10px">
+            <img src="~/img/logo.png" height="60" />
+            <font style="font-size:40px;vertical-align:middle;line-height:40px;font-weight:bold;color:white">
+                Greenspot Product & Service Application
+            </font>
+        </div>
+        <font class="title">Your Details</font>
+        <p>@_model.BusinessName</p>
+        <p> @_model.Address, @_model.PostCode</p>
+        <p>@_model.Title @_model.FirstName @_model.LastName</p>
+        <p>@_model.Phone @_model.Mobile @_model.Email</p>
+        <font class="title">ID - @_model.IdType</font>
+        <p> @_model.IdFirstName @_model.IdLastName, @_model.DoB.ToString("dd MMM yyyy")</p>
+        @if (_model.IdType.ToLower().Contains("passport"))
+        {
+            <p> @_model.PassportNo, @_model.PasspotCountry</p>
+        }
+        else {
+            <p> @_model.DriverLicenceNo5a, @_model.DriverLicenceNo5b</p>
+        }
+        <font class="title">Products & Services</font>
+        <div>
+            <label class="cellDevice">Model</label>
+            <label class="cellDevice">Price</label>
+            <label class="cellDevice">Qty.</label>
+        </div>
+        @if (_model.Router.Quantity >= 1)
+        {
+            <p>
+                <label class="cellDevice">@_model.Router.Model</label>
+                <label class="cellDevice">@_model.Router.Price.ToString("$0.00")</label>
+                <label class="cellDevice">@_model.Router.Quantity</label>
+            </p>
+        }
+        @if (_model.AP.Quantity >= 1)
+        {
+            <p>
+                <label class="cellDevice">@_model.AP.Model</label>
+                <label class="cellDevice">@_model.AP.Price.ToString("$0.00")</label>
+                <label class="cellDevice">@_model.AP.Quantity</label>
+            </p>
+        }
+        <font class="title">Installation</font>
+        <p> @_model.InstallDate  @_model.InstallTime</p>
+        <font class="title">Price</font>
+        <div>
+            <label class="cellPrice">Price</label>
+            <label class="cellPrice">Discount</label>
+            <label class="cellPrice"></label>
+        </div>
+        <p>
+            <label class="cellPrice">@_model.OriginalPrice.ToString("$0.00")</label>
+            <label class="cellPrice">- @_model.Discount.ToString("$0.00")</label>
+            <label class="cellPrice">= @_model.ActualPrice.ToString("$0.00")</label>
+        </p>
+
+        <div style="text-align:right;padding-right:100px">
+            <img src="@_model.Signature" width="200" />
+            <p>@_model.CreatedTiime.ToString("dd MMM, yyyy")</p>
+        </div>
+
+        <div style="margin-top:20px;text-align:center">
+            <form action="/home/submit" method="post">
+                <button type="submit" class="btn btn-success" style="font-size: 30px; font-weight: bold">
+                    Confirm
+                </button>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

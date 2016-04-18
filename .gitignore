@@ -1,0 +1,16 @@
+###############
+#    ignore   #
+###############
+###############
+#    global   #
+###############
+###############
+#    project  #
+###############
+/ContractOnline/bin/
+/ContractOnline/obj/
+/ContractOnlineTest/
+/.vs/
+/packages/
+/Pub/
+/TestResults/
