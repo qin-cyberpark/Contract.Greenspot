@@ -55,7 +55,6 @@
             //submit
             $http.post('/home/preview', vm.contract).success(function (result) {
                 if (result === 'ok') {
-                    console.log(result);
                     $window.open("/home/preview");
                 }
             }).error(function () {

@@ -128,7 +128,6 @@
     <Content Include="Views\Home\Preview.cshtml" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Views\Home\Terms.cshtml" />
-    <Content Include="scripts\countries.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

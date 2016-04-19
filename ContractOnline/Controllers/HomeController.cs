@@ -12,6 +12,8 @@ namespace ContractOnline.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            var model = (ContractOnline.Models.FormViewModel)Session["CURRENT_APPLICATION"];
+            ViewBag.Model = model;
             return View();
         }
 
