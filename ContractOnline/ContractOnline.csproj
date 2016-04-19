@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\jquery-ui.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="img\checkbox.png" />
@@ -97,9 +98,12 @@
     <Content Include="img\logo.png" />
     <Content Include="img\sign.png" />
     <Content Include="scripts\angular.min.js" />
+    <Content Include="scripts\autoCompleteAddress.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\contract.controller.js" />
     <Content Include="scripts\jquery-2.2.0.min.js" />
+    <Content Include="scripts\jquery-ui.min.js" />
+    <Content Include="scripts\jquery.easy-autocomplete.min.js" />
     <Content Include="scripts\signature_pad.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -124,6 +128,7 @@
     <Content Include="Views\Home\Preview.cshtml" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="scripts\countries.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

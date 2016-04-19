@@ -7,10 +7,11 @@
 
     ContractController.$inject = ['$http', '$window'];
 
-    function ContractController($http,$window) {
+    function ContractController($http, $window) {
         /* jshint validthis:true */
         var vm = this;
 
+        //
         vm.contract = {
             BusinessName: '',
             Address: '', PostCode: '',
@@ -23,7 +24,7 @@
             Router: { Model: 'Wifi Router MX30', Price: 99, Quantity: '1' },
             AP: { Model: 'AP MXP-2001', Price: 149, Quantity: '0' },
             InstallDate: 'As Soon As Possible', InstallTime: '10AM-12PM',
-            Discount: 0, Signature: '', Agree:false,
+            Discount: 0, Signature: '', Agree: false,
 
             OriginalPrice: function () {
                 var ttl = 0;
@@ -45,10 +46,11 @@
         vm.submit = function () {
             //load image data
             vm.contract.Signature = $("#signData").val();
-            if (!vm.validate() || !vm.contract.Agree) {
-                alert('Please check inputed value, signature and agree terms and conditions.');
+            vm.contract.Address = $("#address").val();
+            vm.contract.PasspotCountry = $("#passportCountry").val();
+            if (!vm.validate()){
                 return;
-            };
+            }
 
             //submit
             $http.post('/home/preview', vm.contract).success(function (result) {
@@ -65,7 +67,10 @@
         }
 
         vm.validate = function () {
+            
             var hasErr = false;
+
+            //general
             $('[required]').each(function (idx, obj) {
                 var $obj = $(obj);
                 if ($obj.val() === '') {
@@ -76,11 +81,60 @@
                 }
             });
 
-            if (!vm.contract.Signature || vm.contract.Signature === '') {
-                hasErr = true;
+            //
+            if (vm.contract.IdType === 'Passport') {
+                //passport
+                var $obj = $("#passportNo")
+                if ($obj.val() === '') {
+                    $obj.addClass('form-control-error');
+                    hasErr = true;
+                } else {
+                    $obj.removeClass('form-control-error');
+                }
+
+                $obj = $("#passportCountry")
+                if ($obj.val() === '') {
+                    $obj.addClass('form-control-error');
+                    hasErr = true;
+                } else {
+                    $obj.removeClass('form-control-error');
+                }
+            } else {
+                var $obj = $("#driverLicenceNo5a")
+                if ($obj.val() === '') {
+                    $obj.addClass('form-control-error');
+                    hasErr = true;
+                } else {
+                    $obj.removeClass('form-control-error');
+                }
+
+                $obj = $("#driverLicenceNo5b")
+                if ($obj.val() === '') {
+                    $obj.addClass('form-control-error');
+                    hasErr = true;
+                } else {
+                    $obj.removeClass('form-control-error');
+                }
+            }
+            if (hasErr) {
+                alert('Please check inputted value.');
+                return false;
             }
 
-            return !hasErr;
+            //agreement
+            if (!vm.contract.Agree) {
+                alert('Please agree Terms & Conditions.');
+                return false;
+            }
+
+            //sign
+            if (!vm.contract.Signature || vm.contract.Signature === '') {
+                alert('Please sign.');
+                return false;
+            }
+
+            return true;
         }
+
     }
 })();

@@ -111,7 +111,7 @@ namespace ContractOnline.Models
             //general
             content.Add(new Phrase("\n\n\nYour Detail\n", ftTitle));
             content.Add(new Phrase(BusinessName + "\n", ftContext));
-            content.Add(new Phrase(Address + " ," + PostCode + "\n", ftContext));
+            content.Add(new Phrase(Address + "\n", ftContext));
             content.Add(new Phrase(Title + " " + FirstName + " " + LastName + "\n", ftContext));
             content.Add(new Phrase(Phone + ", " + Mobile + ", " + Email + "\n", ftContext));
             //id
