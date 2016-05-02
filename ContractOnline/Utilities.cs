@@ -56,10 +56,8 @@ namespace ContractOnline
         private static MailAddress _fromAddress;
         private static object _locker = new object();
 
-
         public static bool Send(string toAddress, string pdfPath)
         {
-
             // Specify the message content.
             MailMessage message = new MailMessage(_fromAddress, new MailAddress(ConfigurationManager.AppSettings["ccAddress"]));
             message.To.Add(toAddress);

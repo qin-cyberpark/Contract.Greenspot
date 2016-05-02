@@ -95,12 +95,10 @@
             <label class="cellPrice">- @_model.Discount.ToString("$0.00")</label>
             <label class="cellPrice">= @_model.ActualPrice.ToString("$0.00")</label>
         </p>
-
-        <div style="text-align:right;padding-right:100px">
+        <div style="margin-top:20px;text-align:right;padding-right:150px;">
             <img src="@_model.Signature" width="200" />
-            <p>@_model.CreatedTiime.ToString("dd MMM, yyyy")</p>
+            <br />@_model.CreatedTiime.ToString("dd MMM, yyyy")
         </div>
-
         <div style="margin-top:20px;text-align:center">
             <form action="/home/submit" method="post">
                 <a href="/" class="btn btn-success" style="font-size: 30px; font-weight: bold">

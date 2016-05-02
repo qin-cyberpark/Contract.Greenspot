@@ -79,8 +79,8 @@ namespace ContractOnline.Models
             //color
             var mainGreen = new BaseColor(92, 184, 92);
             var ftHeader = FontFactory.GetFont("Helvetica Neue", 20, Font.BOLD, BaseColor.WHITE);
-            var ftTitle = FontFactory.GetFont("Helvetica Neue", 18, Font.BOLD, mainGreen);
-            var ftContext = FontFactory.GetFont("Arial Black", 18, Font.NORMAL, BaseColor.BLACK);
+            var ftTitle = FontFactory.GetFont("Helvetica Neue", 16, Font.BOLD, mainGreen);
+            var ftContext = FontFactory.GetFont("Arial Black", 16, Font.NORMAL, BaseColor.BLACK);
 
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             Document doc = new Document(new Rectangle(PageSize.A4), 0, 0, 0, 0);
@@ -109,7 +109,7 @@ namespace ContractOnline.Models
             content.IndentationLeft = 10f;
 
             //general
-            content.Add(new Phrase("\n\n\nYour Detail\n", ftTitle));
+            content.Add(new Phrase("\n\nYour Detail\n", ftTitle));
             content.Add(new Phrase(BusinessName + "\n", ftContext));
             content.Add(new Phrase(Address + "\n", ftContext));
             content.Add(new Phrase(Title + " " + FirstName + " " + LastName + "\n", ftContext));
@@ -128,8 +128,11 @@ namespace ContractOnline.Models
 
             //Product & Service
             content.Add(new Phrase("\nProducts & Services", ftTitle));
+            var tblDev = new Paragraph();
+            tblDev.IndentationLeft = 5;
             var devices = new PdfPTable(3);
-            //devices.DefaultCell.Border = Rectangle.NO_BORDER;
+            devices.PaddingTop = 0;
+            devices.SpacingBefore = 0;
             devices.HorizontalAlignment = 0;
             devices.AddCell(new Phrase("Model", ftContext));
             devices.AddCell(new Phrase("Price", ftContext));
@@ -146,7 +149,8 @@ namespace ContractOnline.Models
                 devices.AddCell(new Phrase(AP.Price.ToString("$0.00"), ftContext));
                 devices.AddCell(new Phrase(AP.Quantity.ToString(), ftContext));
             }
-            content.Add(devices);
+            tblDev.Add(devices);
+            content.Add(tblDev);
 
             //installation
             content.Add(new Phrase("\nInstallation\n", ftTitle));
@@ -154,7 +158,10 @@ namespace ContractOnline.Models
 
             //price
             content.Add(new Phrase("\n\nPrice", ftTitle));
+            var tblPrice = new Paragraph();
+            tblPrice.IndentationLeft = 15;
             var price = new PdfPTable(5);
+            price.DefaultCell.PaddingTop = 0;
             price.DefaultCell.Border = Rectangle.NO_BORDER;
             price.HorizontalAlignment = 0;
             price.AddCell(new Phrase("Price", ftContext));
@@ -168,21 +175,40 @@ namespace ContractOnline.Models
             price.AddCell(new Phrase(Discount.ToString("$0.00"), ftContext));
             price.AddCell(new Phrase("=", ftContext));
             price.AddCell(new Phrase(ActualPrice.ToString("$0.00"), ftContext));
-            content.Add(price);
 
+            tblPrice.Add(price);
             doc.Add(content);
-
+            doc.Add(tblPrice);
 
             //signature
             var imgSign = Image.GetInstance(Utilities.Base64ToImage(Signature), 
                 System.Drawing.Imaging.ImageFormat.Png);
-            imgSign.SetAbsolutePosition(380, 100);
+            imgSign.SetAbsolutePosition(doc.PageSize.Width - 250, 220);
             imgSign.ScaleToFit(200, 100);
             context.AddImage(imgSign);
 
             var lblDate = new Phrase(CreatedTiime.ToString("dd MMM, yyy"), ftContext);
-            ColumnText.ShowTextAligned(context, Element.ALIGN_CENTER, lblDate, doc.PageSize.Width - 120, 80, 0);
+            ColumnText.ShowTextAligned(context, Element.ALIGN_RIGHT, lblDate, doc.PageSize.Width - 120, 200, 0);
 
+            //line
+            context.SetLineWidth(3);
+            context.MoveTo(10, 188);
+            context.LineTo(doc.PageSize.Width-10, 188);
+            context.Stroke();
+
+            var installConfirm = new Phrase(@"Above equipment is complete according to the installation requirements and qualified acceptance.", ftContext);
+            var ct = new ColumnText(context);
+            ct.SetSimpleColumn(installConfirm, 10, 180, doc.PageSize.Width-5, 130, 20f, Element.ALIGN_LEFT | Element.ALIGN_TOP);
+
+
+
+            var lblSign = new Phrase("Signature:", ftContext);
+            ColumnText.ShowTextAligned(context, Element.ALIGN_LEFT, lblSign, 10, 75, 0);
+
+            var lblSignDate = new Phrase("Date:", ftContext);
+            ColumnText.ShowTextAligned(context, Element.ALIGN_RIGHT, lblSignDate, doc.PageSize.Width - 200, 75, 0);
+
+            ct.Go();
 
             //footer
             context.Rectangle(0, 0, doc.PageSize.Width, 10);
