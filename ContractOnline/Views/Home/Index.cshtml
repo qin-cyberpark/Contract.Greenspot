@@ -1,5 +1,21 @@
 ﻿@{
     var _model = (ContractOnline.Models.FormViewModel)ViewBag.Model;
+    var _sales = new SortedList<string, string>();
+    _sales.Add("Greenspot", "0800 00 1747");
+    _sales.Add("Angel", "0223917073");
+    _sales.Add("Rony", "02108199374");
+    _sales.Add("name2", "phone2");
+    _sales.Add("name3", "phone3");
+
+    string _salesName = Request["salesName"];
+    string _salesPhone = null;
+    if (string.IsNullOrEmpty(_salesName) || !_sales.ContainsKey(_salesName))
+    {
+        _salesName = "Greenspot";
+    }
+    _salesPhone = _sales[_salesName];
+
+
 }
 <!DOCTYPE html>
 <html ng-app="greenspot">
@@ -276,13 +292,15 @@
                     </div>
                     <input id="chkTerms" type="checkbox" class="css-checkbox" ng-model="vm.contract.Agree" />
                     <label for="chkTerms" class="css-label"><a href="/home/terms" target="_blank">Terms & Conditions</a></label>
-
+                    <input type="hidden" id="salesName" value="@_salesName" />
+                    <input type="hidden" id="salesPhone" value="@_salesPhone" />
                     <button type="submit" class="col-xs-12 btn btn-success" style="width:100%;font-size:30px;font-weight:bold"
                             ng-click="vm.submit()">
                         Preview
                     </button>
                 </div>
                 <!-- #endregion -->
+                <div style="width:100%;text-align:center;font-size:20px;margin-top:10px;">@_salesName, @_salesPhone</div>
             </div>
         </form>
     </div>

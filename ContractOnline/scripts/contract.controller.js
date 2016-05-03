@@ -48,6 +48,10 @@
             vm.contract.Signature = $("#signData").val();
             vm.contract.Address = $("#address").val();
             vm.contract.PasspotCountry = $("#passportCountry").val();
+            vm.contract.SalesName = $("#salesName").val();
+            vm.contract.SalesPhone = $("#salesPhone").val();
+            console.log('submit');
+            console.log(vm.contract);
             if (!vm.validate()){
                 return;
             }

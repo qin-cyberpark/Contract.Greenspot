@@ -44,16 +44,16 @@ namespace ContractOnline.Controllers
             var filePath = ConfigurationManager.AppSettings["pdfFolder"] + model.FileName;
             model.ToPDF(filePath);
 
-            return Redirect("/pdf/" + model.FileName);
+            //return Redirect("/pdf/" + model.FileName);
 
-            //if (Utilities.Send(model.Email, filePath))
-            //{
-            //    return Redirect("/pdf/" + model.FileName);
-            //}
-            //else
-            //{
-            //    return Content("Oops...something went wrong.");
-            //}
+            if (Utilities.Send(model.Email, filePath))
+            {
+                return Redirect("/pdf/" + model.FileName);
+            }
+            else
+            {
+                return Content("Oops...something went wrong.");
+            }
         }
 
         public ActionResult Terms()
