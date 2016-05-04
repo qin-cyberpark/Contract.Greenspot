@@ -56,11 +56,27 @@ namespace ContractOnline
         private static MailAddress _fromAddress;
         private static object _locker = new object();
 
-        public static bool Send(string toAddress, string pdfPath)
+        public static bool Send(string[] addresses, string pdfPath)
         {
             // Specify the message content.
             MailMessage message = new MailMessage(_fromAddress, new MailAddress(ConfigurationManager.AppSettings["ccAddress"]));
-            message.To.Add(toAddress);
+            foreach(var addr in addresses)
+            {
+                if (!string.IsNullOrEmpty(addr))
+                {
+                    message.To.Add(addr);
+                }
+            }
+       
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ccAddress1"]))
+            {
+                message.To.Add(ConfigurationManager.AppSettings["ccAddress1"]);
+            }
+
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ccAddress1"]))
+            {
+                message.To.Add(ConfigurationManager.AppSettings["ccAddress1"]);
+            }
             if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ccAddress1"]))
             {
                 message.To.Add(ConfigurationManager.AppSettings["ccAddress1"]);
@@ -68,6 +84,10 @@ namespace ContractOnline
             if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ccAddress2"]))
             {
                 message.To.Add(ConfigurationManager.AppSettings["ccAddress2"]);
+            }
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ccAddress3"]))
+            {
+                message.To.Add(ConfigurationManager.AppSettings["ccAddress3"]);
             }
 
             message.Subject = "Your Greenspot Application";

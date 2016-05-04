@@ -46,7 +46,7 @@ namespace ContractOnline.Controllers
 
             //return Redirect("/pdf/" + model.FileName);
 
-            if (Utilities.Send(model.Email, filePath))
+            if (Utilities.Send(new string[] { model.Email, model.SalesEmail }, filePath))
             {
                 return Redirect("/pdf/" + model.FileName);
             }

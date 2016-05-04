@@ -50,8 +50,7 @@
             vm.contract.PasspotCountry = $("#passportCountry").val();
             vm.contract.SalesName = $("#salesName").val();
             vm.contract.SalesPhone = $("#salesPhone").val();
-            console.log('submit');
-            console.log(vm.contract);
+            vm.contract.SalesEmail = $("#salesEmail").val();
             if (!vm.validate()){
                 return;
             }

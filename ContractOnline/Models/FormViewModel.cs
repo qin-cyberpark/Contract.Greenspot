@@ -48,8 +48,8 @@ namespace ContractOnline.Models
         public string Signature { get; set; }
         public string SalesName { get; set; }
         public string SalesPhone { get; set; }
+        public string SalesEmail { get; set; }
         public DateTime CreatedTiime { get; set; }
-        private string _fileName = null;
         public string FileName
         {
             get
@@ -223,7 +223,4 @@ namespace ContractOnline.Models
             doc.Close();
         }
     }
-
-
-
 }

@@ -1,19 +1,21 @@
 ﻿@{
     var _model = (ContractOnline.Models.FormViewModel)ViewBag.Model;
-    var _sales = new SortedList<string, string>();
-    _sales.Add("Greenspot", "0800 00 1747");
-    _sales.Add("Angel", "0223917073");
-    _sales.Add("Rony", "02108199374");
-    _sales.Add("name2", "phone2");
-    _sales.Add("name3", "phone3");
+    var _sales = new SortedList<string, string[]>();
+    _sales.Add("Greenspot", new string[] { "0800 00 1747", "" });
+    _sales.Add("Angel", new string[] { "0223917073", "angel.chen@cardworld.co.nz" });
+    _sales.Add("Rony", new string[] { "02108199374", "rony.sun@mdgroup.nz" });
+    _sales.Add("name2", new string[] { "phone2", "" });
+    _sales.Add("test", new string[] { "022001002", "qin@cyberpark.co.nz" });
 
     string _salesName = Request["salesName"];
     string _salesPhone = null;
+    string _salesEmail = null;
     if (string.IsNullOrEmpty(_salesName) || !_sales.ContainsKey(_salesName))
     {
         _salesName = "Greenspot";
     }
-    _salesPhone = _sales[_salesName];
+    _salesPhone = _sales[_salesName][0];
+    _salesEmail = _sales[_salesName][1];
 
 
 }
@@ -190,18 +192,18 @@
             </div>
             <div class="form-group" ng-show="vm.contract.IdType === 'Driver Licence'">
                 <div class="col-xs-6">
-                    <input type="text" id="driverLicenceNo5a" name="driverLicenceNo5a" class="form-control"  placeholder="Driver Licence No.(5a)" ng-model="vm.contract.DriverLicenceNo5a" />
+                    <input type="text" id="driverLicenceNo5a" name="driverLicenceNo5a" class="form-control" placeholder="Driver Licence No.(5a)" ng-model="vm.contract.DriverLicenceNo5a" />
                 </div>
                 <div class="col-xs-6">
-                    <input type="text" id="driverLicenceNo5b" name="driverLicenceNo5b" class="form-control"  placeholder="Driver Licence No.(5b)" ng-model="vm.contract.DriverLicenceNo5b" />
+                    <input type="text" id="driverLicenceNo5b" name="driverLicenceNo5b" class="form-control" placeholder="Driver Licence No.(5b)" ng-model="vm.contract.DriverLicenceNo5b" />
                 </div>
             </div>
-            <div class="form-group" ng-show ="vm.contract.IdType === 'Passport'">
+            <div class="form-group" ng-show="vm.contract.IdType === 'Passport'">
                 <div class="col-xs-6">
                     <input type="text" id="passportNo" name="passportNo" class="form-control" placeholder="Passport No." ng-model="vm.contract.PassportNo" />
                 </div>
                 <div class="col-xs-6">
-                    <input type="text" id="passportCountry" name="passportCountry" class="form-control"  placeholder="Passport country of origin" ng-model="vm.contract.PasspotCountry" />
+                    <input type="text" id="passportCountry" name="passportCountry" class="form-control" placeholder="Passport country of origin" ng-model="vm.contract.PasspotCountry" />
                 </div>
             </div>
             <!-- #endregion -->
@@ -291,9 +293,11 @@
                         <label class="col-xs-6" style="text-align:right">{{vm.contract.ActualPrice() | currency:$}}</label>
                     </div>
                     <input id="chkTerms" type="checkbox" class="css-checkbox" ng-model="vm.contract.Agree" />
-                    <label for="chkTerms" class="css-label"><a href="/home/terms" target="_blank">Terms & Conditions</a></label>
+                    <label for="chkTerms" class="css-label"><a href="/termsAndConditions.pdf" target="_blank">Terms & Conditions</a></label>
                     <input type="hidden" id="salesName" value="@_salesName" />
                     <input type="hidden" id="salesPhone" value="@_salesPhone" />
+                    <input type="hidden" id="salesEmail" value="@_salesEmail" />
+                    
                     <button type="submit" class="col-xs-12 btn btn-success" style="width:100%;font-size:30px;font-weight:bold"
                             ng-click="vm.submit()">
                         Preview

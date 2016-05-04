@@ -126,6 +126,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Views\Home\Preview.cshtml" />
+    <Content Include="termsAndConditions.pdf" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Views\Home\Terms.cshtml" />
     <None Include="Web.Debug.config">
