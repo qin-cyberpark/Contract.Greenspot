@@ -42,11 +42,12 @@ namespace ContractOnline.Controllers
             }
 
             var filePath = ConfigurationManager.AppSettings["pdfFolder"] + model.FileName;
+            var tac = ConfigurationManager.AppSettings["pdfFolder"] + "Greenspot Term And Conditions.pdf";
             model.ToPDF(filePath);
 
             //return Redirect("/pdf/" + model.FileName);
 
-            if (Utilities.Send(new string[] { model.Email, model.SalesEmail }, filePath))
+            if (Utilities.Send(new string[] { model.Email, model.SalesEmail }, new string[]{tac, filePath}))
             {
                 return Redirect("/pdf/" + model.FileName);
             }
